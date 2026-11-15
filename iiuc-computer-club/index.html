@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>IIUC Computer Club | International Islamic University Chittagong</title>
+  <meta name="description" content="IIUC Computer Club: a community of developers, problem-solvers and future technology leaders." />
+
+  <!-- Tailwind Play CDN: no build step needed -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    // Club palette + fonts, available as classes like bg-navy, text-royal, font-display
+    tailwind.config = {
+      theme: { extend: {
+        colors: { navy: '#0B1F3A', royal: '#2563EB', accent: '#06B6D4', mist: '#F8FAFC', ink: '#0F172A' },
+        fontFamily: { display: ['Sora', 'sans-serif'], sans: ['"Source Sans 3"', 'system-ui', 'sans-serif'] }
+      } }
+    };
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    /* The only custom CSS: dotted grid for the hero and the blinking code cursor */
+    .dot-grid { background-image: radial-gradient(rgba(255,255,255,.12) 1px, transparent 1px); background-size: 24px 24px; }
+    .caret { animation: blink 1s steps(1) infinite; }
+    @keyframes blink { 50% { opacity: 0; } }
+    @media (prefers-reduced-motion: reduce) { .caret { animation: none; } }
+  </style>
+</head>
+
+<body class="font-sans text-ink bg-white antialiased">
+
+<!-- Icon sprite: reuse with <svg class="h-6 w-6"><use href="#i-code"/></svg> -->
+<svg xmlns="http://www.w3.org/2000/svg" class="hidden" aria-hidden="true">
+  <symbol id="i-code" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m8 8-4 4 4 4M16 8l4 4-4 4M14 5l-4 14"/></symbol>
+  <symbol id="i-web" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M7 6.5h.01M10 6.5h.01"/></symbol>
+  <symbol id="i-ai" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z"/><path d="m9 12 2 2 4-4"/></symbol>
+  <symbol id="i-robot" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="8" width="16" height="11" rx="2"/><path d="M12 8V5M9 13h.01M15 13h.01M9 16h6"/><circle cx="12" cy="4" r="1"/></symbol>
+  <symbol id="i-talk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5h18v11H3zM12 16v4M8 20h8"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6M16 5.5a3 3 0 0 1 0 5.5M18 14.5c1.8.8 3 2.6 3 5.5"/></symbol>
+  <symbol id="i-trophy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4h8v5a4 4 0 0 1-8 0zM8 6H4v2a3 3 0 0 0 4 3M16 6h4v2a3 3 0 0 1-4 3M12 13v4M8 20h8M10 17h4"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3 2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.3l-5.2 2.8 1-5.8L3.5 9.2l5.9-.9z"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.2 7-11a7 7 0 0 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></symbol>
+  <symbol id="i-fb" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 8h3V4h-3a4 4 0 0 0-4 4v2H7v4h3v7h4v-7h3l1-4h-4V8z"/></symbol>
+  <symbol id="i-in" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 11v5M8 8h.01M12 16v-5M12 13a2.5 2.5 0 0 1 5 0v3"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+</svg>
+
+<a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded focus:bg-white focus:px-3 focus:py-2">Skip to content</a>
+
+<!-- ============ A. NAVIGATION ============ -->
+<header id="site-header" class="sticky top-0 z-50 border-b border-slate-200 bg-white/95 backdrop-blur transition-shadow">
+  <nav class="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8" aria-label="Main navigation">
+    <a href="#home" class="flex items-center gap-3">
+      <span class="grid h-9 w-9 place-items-center rounded-lg bg-navy text-accent" aria-hidden="true"><svg class="h-5 w-5"><use href="#i-code"/></svg></span>
+      <span class="font-display text-sm font-semibold leading-tight text-navy">IIUC<br class="sm:hidden" /> Computer Club</span>
+    </a>
+
+    <ul class="hidden items-center gap-1 lg:flex">
+      <li><a class="nav-link rounded-md px-3 py-2 text-sm font-semibold text-slate-600 transition hover:text-royal" href="#home">Home</a></li>
+      <li><a class="nav-link rounded-md px-3 py-2 text-sm font-semibold text-slate-600 transition hover:text-royal" href="#about">About</a></li>
+      <li><a class="nav-link rounded-md px-3 py-2 text-sm font-semibold text-slate-600 transition hover:text-royal" href="#events">Events</a></li>
+      <li><a class="nav-link rounded-md px-3 py-2 text-sm font-semibold text-slate-600 transition hover:text-royal" href="#activities">Activities</a></li>
+      <li><a class="nav-link rounded-md px-3 py-2 text-sm font-semibold text-slate-600 transition hover:text-royal" href="#team">Team</a></li>
+      <li><a class="nav-link rounded-md px-3 py-2 text-sm font-semibold text-slate-600 transition hover:text-royal" href="#contact">Contact</a></li>
+      <li class="ml-3"><a href="#join" class="rounded-lg bg-royal px-4 py-2 text-sm font-semibold text-white transition hover:bg-navy focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-royal">Join the Club</a></li>
+    </ul>
+
+    <button id="menu-btn" class="grid h-10 w-10 place-items-center rounded-md text-navy hover:bg-slate-100 lg:hidden" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+      <svg id="icon-open" class="h-6 w-6"><use href="#i-menu"/></svg>
+      <svg id="icon-close" class="hidden h-6 w-6"><use href="#i-x"/></svg>
+    </button>
+  </nav>
+
+  <!-- Mobile menu (toggled by js/script.js) -->
+  <div id="mobile-menu" class="hidden border-t border-slate-200 bg-white lg:hidden">
+    <ul class="mx-auto flex max-w-7xl flex-col gap-1 px-4 py-3 sm:px-6">
+      <li><a class="nav-link block rounded-md px-3 py-2 font-semibold text-slate-700 hover:bg-mist" href="#home">Home</a></li>
+      <li><a class="nav-link block rounded-md px-3 py-2 font-semibold text-slate-700 hover:bg-mist" href="#about">About</a></li>
+      <li><a class="nav-link block rounded-md px-3 py-2 font-semibold text-slate-700 hover:bg-mist" href="#events">Events</a></li>
+      <li><a class="nav-link block rounded-md px-3 py-2 font-semibold text-slate-700 hover:bg-mist" href="#activities">Activities</a></li>
+      <li><a class="nav-link block rounded-md px-3 py-2 font-semibold text-slate-700 hover:bg-mist" href="#team">Team</a></li>
+      <li><a class="nav-link block rounded-md px-3 py-2 font-semibold text-slate-700 hover:bg-mist" href="#contact">Contact</a></li>
+      <li class="pt-2"><a href="#join" class="block rounded-lg bg-royal px-4 py-3 text-center font-semibold text-white">Join the Club</a></li>
+    </ul>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- ============ B. HERO ============ -->
+<section id="home" class="dot-grid scroll-mt-16 overflow-hidden bg-navy text-white">
+  <div class="mx-auto grid max-w-7xl items-center gap-12 px-4 py-16 sm:px-6 sm:py-20 lg:grid-cols-2 lg:px-8 lg:py-28">
+    <div>
+      <h1 class="font-display text-4xl font-bold leading-tight tracking-tight sm:text-5xl xl:text-6xl">Empowering Minds. Building the Future.</h1>
+      <p class="mt-6 max-w-xl text-lg text-slate-300">Welcome to IIUC Computer Club, a community of innovators, developers, problem-solvers, and future technology leaders.</p>
+      <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+        <a href="#join" class="rounded-lg bg-accent px-6 py-3 text-center font-semibold text-navy transition hover:-translate-y-0.5 hover:bg-white motion-reduce:hover:translate-y-0">Join Our Community</a>
+        <a href="#activities" class="rounded-lg border border-white/30 px-6 py-3 text-center font-semibold transition hover:-translate-y-0.5 hover:border-accent hover:text-accent motion-reduce:hover:translate-y-0">Explore Activities</a>
+      </div>
+    </div>
+
+    <!-- Illustration: a code editor window drawn with HTML/Tailwind (no image file needed) -->
+    <div class="mx-auto w-full max-w-lg" role="img" aria-label="Illustration of a code editor showing a short program for the club">
+      <div class="overflow-hidden rounded-xl border border-white/10 bg-[#081529] shadow-2xl shadow-black/40">
+        <div class="flex items-center gap-2 border-b border-white/10 px-4 py-3">
+          <span class="h-3 w-3 rounded-full bg-slate-600"></span><span class="h-3 w-3 rounded-full bg-slate-600"></span><span class="h-3 w-3 rounded-full bg-slate-600"></span>
+          <span class="ml-3 font-mono text-xs text-slate-400">club.js</span>
+        </div>
+        <pre class="overflow-x-auto p-5 font-mono text-[13px] leading-7 text-slate-300 sm:text-sm"><code><span class="text-slate-500">// Every member starts here</span>
+<span class="text-accent">const</span> club = {
+  name: <span class="text-emerald-300">"IIUC Computer Club"</span>,
+  focus: [<span class="text-emerald-300">"code"</span>, <span class="text-emerald-300">"ideas"</span>, <span class="text-emerald-300">"teamwork"</span>],
+};
+
+<span class="text-accent">function</span> <span class="text-blue-300">join</span>(you) {
+  <span class="text-accent">return</span> build(you, club);<span class="caret text-accent">▌</span>
+}</code></pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ C. ABOUT ============ -->
+<section id="about" class="scroll-mt-16 bg-white py-20">
+  <div class="mx-auto grid max-w-7xl items-center gap-12 px-4 sm:px-6 lg:grid-cols-2 lg:px-8">
+    <div class="order-2 lg:order-1" role="img" aria-label="Illustration of students collaborating around linked code blocks">
+      <div class="relative rounded-2xl bg-mist p-8">
+        <svg viewBox="0 0 320 220" class="h-auto w-full" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M80 60h160M80 60v100M240 60v100M80 160h160" stroke="#2563EB" stroke-width="2" stroke-dasharray="4 6"/>
+          <rect x="40" y="30" width="80" height="60" rx="10" fill="#0B1F3A"/><path d="m68 50-10 10 10 10M92 50l10 10-10 10" stroke="#06B6D4" stroke-width="3"/>
+          <rect x="200" y="30" width="80" height="60" rx="10" fill="#2563EB"/><path d="M220 60h40M220 48h40M220 72h24" stroke="#fff" stroke-width="3"/>
+          <rect x="40" y="130" width="80" height="60" rx="10" fill="#fff" stroke="#0B1F3A" stroke-width="2"/><circle cx="80" cy="152" r="8" fill="#06B6D4"/><path d="M62 178c4-12 32-12 36 0" stroke="#0B1F3A" stroke-width="3"/>
+          <rect x="200" y="130" width="80" height="60" rx="10" fill="#fff" stroke="#0B1F3A" stroke-width="2"/><path d="M220 175l14-18 12 10 14-22" stroke="#2563EB" stroke-width="3"/>
+        </svg>
+      </div>
+    </div>
+    <div class="order-1 lg:order-2">
+      <h2 class="font-display text-3xl font-bold text-navy sm:text-4xl">A student community for people who build</h2>
+      <p class="mt-5 max-w-xl text-lg text-slate-600">IIUC Computer Club brings together students of International Islamic University Chittagong who are curious about technology. We learn by doing, and we help each other grow.</p>
+      <ul class="mt-6 space-y-3 text-slate-700">
+        <li class="flex gap-3"><svg class="mt-1 h-5 w-5 shrink-0 text-royal"><use href="#i-code"/></svg>Building technical skills</li>
+        <li class="flex gap-3"><svg class="mt-1 h-5 w-5 shrink-0 text-royal"><use href="#i-star"/></svg>Encouraging innovation</li>
+        <li class="flex gap-3"><svg class="mt-1 h-5 w-5 shrink-0 text-royal"><use href="#i-users"/></svg>Promoting collaboration</li>
+        <li class="flex gap-3"><svg class="mt-1 h-5 w-5 shrink-0 text-royal"><use href="#i-trophy"/></svg>Organizing technical workshops and competitions</li>
+        <li class="flex gap-3"><svg class="mt-1 h-5 w-5 shrink-0 text-royal"><use href="#i-talk"/></svg>Connecting students with opportunities in technology</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ D. WHAT WE DO ============ -->
+<section id="activities" class="scroll-mt-16 bg-mist py-20">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="max-w-2xl">
+      <h2 class="font-display text-3xl font-bold text-navy sm:text-4xl">What we do</h2>
+      <p class="mt-4 text-lg text-slate-600">Six areas where members learn, practice, and build together.</p>
+    </div>
+    <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <article class="group rounded-2xl border border-slate-200 bg-white p-6 transition hover:-translate-y-1 hover:border-royal hover:shadow-lg motion-reduce:hover:translate-y-0">
+        <span class="grid h-12 w-12 place-items-center rounded-xl bg-royal/10 text-royal transition group-hover:bg-royal group-hover:text-white"><svg class="h-6 w-6"><use href="#i-trophy"/></svg></span>
+        <h3 class="mt-5 font-display text-lg font-semibold text-navy">Competitive Programming</h3>
+        <p class="mt-2 text-slate-600">Practice algorithms and data structures, and prepare for contests with your peers.</p>
+      </article>
+      <article class="group rounded-2xl border border-slate-200 bg-white p-6 transition hover:-translate-y-1 hover:border-royal hover:shadow-lg motion-reduce:hover:translate-y-0">
+        <span class="grid h-12 w-12 place-items-center rounded-xl bg-royal/10 text-royal transition group-hover:bg-royal group-hover:text-white"><svg class="h-6 w-6"><use href="#i-web"/></svg></span>
+        <h3 class="mt-5 font-display text-lg font-semibold text-navy">Web Development</h3>
+        <p class="mt-2 text-slate-600">Learn to design and build responsive websites and web applications.</p>
+      </article>
+      <article class="group rounded-2xl border border-slate-200 bg-white p-6 transition hover:-translate-y-1 hover:border-royal hover:shadow-lg motion-reduce:hover:translate-y-0">
+        <span class="grid h-12 w-12 place-items-center rounded-xl bg-royal/10 text-royal transition group-hover:bg-royal group-hover:text-white"><svg class="h-6 w-6"><use href="#i-ai"/></svg></span>
+        <h3 class="mt-5 font-display text-lg font-semibold text-navy">Artificial Intelligence &amp; Machine Learning</h3>
+        <p class="mt-2 text-slate-600">Explore how machines learn from data, from first models to real projects.</p>
+      </article>
+      <article class="group rounded-2xl border border-slate-200 bg-white p-6 transition hover:-translate-y-1 hover:border-royal hover:shadow-lg motion-reduce:hover:translate-y-0">
+        <span class="grid h-12 w-12 place-items-center rounded-xl bg-royal/10 text-royal transition group-hover:bg-royal group-hover:text-white"><svg class="h-6 w-6"><use href="#i-shield"/></svg></span>
+        <h3 class="mt-5 font-display text-lg font-semibold text-navy">Cybersecurity</h3>
+        <p class="mt-2 text-slate-600">Understand how systems are attacked and how to protect them safely and ethically.</p>
+      </article>
+      <article class="group rounded-2xl border border-slate-200 bg-white p-6 transition hover:-translate-y-1 hover:border-royal hover:shadow-lg motion-reduce:hover:translate-y-0">
+        <span class="grid h-12 w-12 place-items-center rounded-xl bg-royal/10 text-royal transition group-hover:bg-royal group-hover:text-white"><svg class="h-6 w-6"><use href="#i-robot"/></svg></span>
+        <h3 class="mt-5 font-display text-lg font-semibold text-navy">Robotics &amp; Innovation</h3>
+        <p class="mt-2 text-slate-600">Turn ideas into working prototypes that combine hardware and software.</p>
+      </article>
+      <article class="group rounded-2xl border border-slate-200 bg-white p-6 transition hover:-translate-y-1 hover:border-royal hover:shadow-lg motion-reduce:hover:translate-y-0">
+        <span class="grid h-12 w-12 place-items-center rounded-xl bg-royal/10 text-royal transition group-hover:bg-royal group-hover:text-white"><svg class="h-6 w-6"><use href="#i-talk"/></svg></span>
+        <h3 class="mt-5 font-display text-lg font-semibold text-navy">Workshops and Seminars</h3>
+        <p class="mt-2 text-slate-600">Hands-on sessions and talks that introduce new tools and career paths.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ E. EVENTS ============ -->
+<section id="events" class="scroll-mt-16 bg-white py-20">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="max-w-2xl">
+      <h2 class="font-display text-3xl font-bold text-navy sm:text-4xl">Events and activities</h2>
+      <p class="mt-4 rounded-lg border border-amber-300 bg-amber-50 px-4 py-3 text-sm text-amber-900"><strong>Demonstration content:</strong> these are sample events. Replace them with the club's real events.</p>
+    </div>
+    <div class="mt-10 grid gap-6 sm:grid-cols-2 xl:grid-cols-4">
+
+      <article class="flex flex-col overflow-hidden rounded-2xl border border-slate-200 transition hover:-translate-y-1 hover:shadow-lg motion-reduce:hover:translate-y-0">
+        <div class="grid h-36 place-items-center bg-navy text-accent" role="img" aria-label="Programming Contest banner"><svg class="h-14 w-14"><use href="#i-trophy"/></svg></div>
+        <div class="flex flex-1 flex-col p-5">
+          <span class="w-fit rounded-full bg-royal/10 px-3 py-1 text-xs font-semibold text-royal">Competition</span>
+          <h3 class="mt-3 font-display text-lg font-semibold text-navy">Programming Contest</h3>
+          <p class="mt-2 flex-1 text-slate-600">A team contest with algorithmic problems for beginners and experienced coders.</p>
+          <p class="mt-4 text-sm text-slate-500">Date: to be announced</p>
+          <a href="#contact" class="mt-2 font-semibold text-royal hover:text-navy hover:underline">Learn more</a>
+        </div>
+      </article>
+
+      <article class="flex flex-col overflow-hidden rounded-2xl border border-slate-200 transition hover:-translate-y-1 hover:shadow-lg motion-reduce:hover:translate-y-0">
+        <div class="grid h-36 place-items-center bg-royal text-white" role="img" aria-label="Tech Carnival banner"><svg class="h-14 w-14"><use href="#i-star"/></svg></div>
+        <div class="flex flex-1 flex-col p-5">
+          <span class="w-fit rounded-full bg-royal/10 px-3 py-1 text-xs font-semibold text-royal">Festival</span>
+          <h3 class="mt-3 font-display text-lg font-semibold text-navy">Tech Carnival</h3>
+          <p class="mt-2 flex-1 text-slate-600">A campus showcase of projects, games, and technology activities.</p>
+          <p class="mt-4 text-sm text-slate-500">Date: to be announced</p>
+          <a href="#contact" class="mt-2 font-semibold text-royal hover:text-navy hover:underline">Learn more</a>
+        </div>
+      </article>
+
+      <article class="flex flex-col overflow-hidden rounded-2xl border border-slate-200 transition hover:-translate-y-1 hover:shadow-lg motion-reduce:hover:translate-y-0">
+        <div class="grid h-36 place-items-center bg-accent text-navy" role="img" aria-label="Web Development Workshop banner"><svg class="h-14 w-14"><use href="#i-web"/></svg></div>
+        <div class="flex flex-1 flex-col p-5">
+          <span class="w-fit rounded-full bg-royal/10 px-3 py-1 text-xs font-semibold text-royal">Workshop</span>
+          <h3 class="mt-3 font-display text-lg font-semibold text-navy">Web Development Workshop</h3>
+          <p class="mt-2 flex-1 text-slate-600">Build and publish a responsive website using HTML and Tailwind CSS.</p>
+          <p class="mt-4 text-sm text-slate-500">Date: to be announced</p>
+          <a href="#contact" class="mt-2 font-semibold text-royal hover:text-navy hover:underline">Learn more</a>
+        </div>
+      </article>
+
+      <article class="flex flex-col overflow-hidden rounded-2xl border border-slate-200 transition hover:-translate-y-1 hover:shadow-lg motion-reduce:hover:translate-y-0">
+        <div class="grid h-36 place-items-center bg-slate-800 text-accent" role="img" aria-label="Cybersecurity Seminar banner"><svg class="h-14 w-14"><use href="#i-shield"/></svg></div>
+        <div class="flex flex-1 flex-col p-5">
+          <span class="w-fit rounded-full bg-royal/10 px-3 py-1 text-xs font-semibold text-royal">Seminar</span>
+          <h3 class="mt-3 font-display text-lg font-semibold text-navy">Cybersecurity Seminar</h3>
+          <p class="mt-2 flex-1 text-slate-600">An introduction to online safety, common threats, and ethical security practice.</p>
+          <p class="mt-4 text-sm text-slate-500">Date: to be announced</p>
+          <a href="#contact" class="mt-2 font-semibold text-royal hover:text-navy hover:underline">Learn more</a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ F. WHY JOIN ============ -->
+<section id="join" class="scroll-mt-16 bg-navy py-20 text-white">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <h2 class="max-w-2xl font-display text-3xl font-bold sm:text-4xl">Why join us?</h2>
+    <div class="mt-10 grid gap-x-10 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
+      <div class="flex gap-4"><svg class="mt-1 h-7 w-7 shrink-0 text-accent"><use href="#i-code"/></svg><div><h3 class="font-display font-semibold">Learn practical skills</h3><p class="mt-1 text-slate-300">Go beyond the classroom with hands-on technical practice.</p></div></div>
+      <div class="flex gap-4"><svg class="mt-1 h-7 w-7 shrink-0 text-accent"><use href="#i-users"/></svg><div><h3 class="font-display font-semibold">Collaborate with talented students</h3><p class="mt-1 text-slate-300">Meet peers who share your interests and push you forward.</p></div></div>
+      <div class="flex gap-4"><svg class="mt-1 h-7 w-7 shrink-0 text-accent"><use href="#i-trophy"/></svg><div><h3 class="font-display font-semibold">Join programming competitions</h3><p class="mt-1 text-slate-300">Test your problem-solving in contests, alone or in teams.</p></div></div>
+      <div class="flex gap-4"><svg class="mt-1 h-7 w-7 shrink-0 text-accent"><use href="#i-talk"/></svg><div><h3 class="font-display font-semibold">Attend workshops and seminars</h3><p class="mt-1 text-slate-300">Learn new tools and hear how others build their careers.</p></div></div>
+      <div class="flex gap-4"><svg class="mt-1 h-7 w-7 shrink-0 text-accent"><use href="#i-star"/></svg><div><h3 class="font-display font-semibold">Develop leadership and teamwork</h3><p class="mt-1 text-slate-300">Organize events and lead projects with real responsibility.</p></div></div>
+      <div class="flex gap-4"><svg class="mt-1 h-7 w-7 shrink-0 text-accent"><use href="#i-web"/></svg><div><h3 class="font-display font-semibold">Build real-world projects</h3><p class="mt-1 text-slate-300">Create work you can show to employers and teammates.</p></div></div>
+    </div>
+    <div class="mt-12">
+      <a href="#contact" class="inline-block rounded-lg bg-accent px-8 py-3 font-semibold text-navy transition hover:-translate-y-0.5 hover:bg-white motion-reduce:hover:translate-y-0">Join the Club</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ G. TEAM ============ -->
+<section id="team" class="scroll-mt-16 bg-mist py-20">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="max-w-2xl">
+      <h2 class="font-display text-3xl font-bold text-navy sm:text-4xl">Our team</h2>
+      <p class="mt-4 rounded-lg border border-amber-300 bg-amber-50 px-4 py-3 text-sm text-amber-900"><strong>Sample profiles:</strong> names and photos are placeholders, not actual office bearers.</p>
+    </div>
+    <div class="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+
+      <article class="rounded-2xl border border-slate-200 bg-white p-6 text-center transition hover:-translate-y-1 hover:shadow-lg motion-reduce:hover:translate-y-0">
+        <div class="mx-auto grid h-24 w-24 place-items-center rounded-full bg-navy text-accent" role="img" aria-label="Profile photo placeholder"><svg class="h-10 w-10"><use href="#i-users"/></svg></div>
+        <h3 class="mt-4 font-display font-semibold text-navy">Name Placeholder</h3>
+        <p class="text-slate-600">Club President</p>
+        <div class="mt-4 flex justify-center gap-3 text-slate-500">
+          <a href="#" aria-label="Facebook profile (placeholder)" class="hover:text-royal"><svg class="h-5 w-5"><use href="#i-fb"/></svg></a>
+          <a href="#" aria-label="LinkedIn profile (placeholder)" class="hover:text-royal"><svg class="h-5 w-5"><use href="#i-in"/></svg></a>
+        </div>
+      </article>
+      <article class="rounded-2xl border border-slate-200 bg-white p-6 text-center transition hover:-translate-y-1 hover:shadow-lg motion-reduce:hover:translate-y-0">
+        <div class="mx-auto grid h-24 w-24 place-items-center rounded-full bg-royal text-white" role="img" aria-label="Profile photo placeholder"><svg class="h-10 w-10"><use href="#i-users"/></svg></div>
+        <h3 class="mt-4 font-display font-semibold text-navy">Name Placeholder</h3>
+        <p class="text-slate-600">General Secretary</p>
+        <div class="mt-4 flex justify-center gap-3 text-slate-500">
+          <a href="#" aria-label="Facebook profile (placeholder)" class="hover:text-royal"><svg class="h-5 w-5"><use href="#i-fb"/></svg></a>
+          <a href="#" aria-label="LinkedIn profile (placeholder)" class="hover:text-royal"><svg class="h-5 w-5"><use href="#i-in"/></svg></a>
+        </div>
+      </article>
+      <article class="rounded-2xl border border-slate-200 bg-white p-6 text-center transition hover:-translate-y-1 hover:shadow-lg motion-reduce:hover:translate-y-0">
+        <div class="mx-auto grid h-24 w-24 place-items-center rounded-full bg-accent text-navy" role="img" aria-label="Profile photo placeholder"><svg class="h-10 w-10"><use href="#i-users"/></svg></div>
+        <h3 class="mt-4 font-display font-semibold text-navy">Name Placeholder</h3>
+        <p class="text-slate-600">Technical Lead</p>
+        <div class="mt-4 flex justify-center gap-3 text-slate-500">
+          <a href="#" aria-label="Facebook profile (placeholder)" class="hover:text-royal"><svg class="h-5 w-5"><use href="#i-fb"/></svg></a>
+          <a href="#" aria-label="LinkedIn profile (placeholder)" class="hover:text-royal"><svg class="h-5 w-5"><use href="#i-in"/></svg></a>
+        </div>
+      </article>
+      <article class="rounded-2xl border border-slate-200 bg-white p-6 text-center transition hover:-translate-y-1 hover:shadow-lg motion-reduce:hover:translate-y-0">
+        <div class="mx-auto grid h-24 w-24 place-items-center rounded-full bg-slate-800 text-accent" role="img" aria-label="Profile photo placeholder"><svg class="h-10 w-10"><use href="#i-users"/></svg></div>
+        <h3 class="mt-4 font-display font-semibold text-navy">Name Placeholder</h3>
+        <p class="text-slate-600">Event Coordinator</p>
+        <div class="mt-4 flex justify-center gap-3 text-slate-500">
+          <a href="#" aria-label="Facebook profile (placeholder)" class="hover:text-royal"><svg class="h-5 w-5"><use href="#i-fb"/></svg></a>
+          <a href="#" aria-label="LinkedIn profile (placeholder)" class="hover:text-royal"><svg class="h-5 w-5"><use href="#i-in"/></svg></a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ H. CONTACT ============ -->
+<section id="contact" class="scroll-mt-16 bg-white py-20">
+  <div class="mx-auto grid max-w-7xl gap-12 px-4 sm:px-6 lg:grid-cols-2 lg:px-8">
+    <div>
+      <h2 class="font-display text-3xl font-bold text-navy sm:text-4xl">Get in touch</h2>
+      <p class="mt-4 max-w-md text-lg text-slate-600">Questions about membership or events? Send us a message.</p>
+      <ul class="mt-8 space-y-5 text-slate-700">
+        <li class="flex gap-4"><svg class="mt-0.5 h-6 w-6 shrink-0 text-royal"><use href="#i-mail"/></svg><span>Email: <span class="text-slate-500">club-email@example.com (placeholder)</span></span></li>
+        <li class="flex gap-4"><svg class="mt-0.5 h-6 w-6 shrink-0 text-royal"><use href="#i-pin"/></svg><span>International Islamic University Chittagong (IIUC) campus, Chattogram</span></li>
+        <li class="flex gap-4"><svg class="mt-0.5 h-6 w-6 shrink-0 text-royal"><use href="#i-fb"/></svg><a href="#" class="hover:text-royal hover:underline">Facebook page <span class="text-slate-500">(placeholder link)</span></a></li>
+        <li class="flex gap-4"><svg class="mt-0.5 h-6 w-6 shrink-0 text-royal"><use href="#i-in"/></svg><a href="#" class="hover:text-royal hover:underline">LinkedIn <span class="text-slate-500">(placeholder link)</span></a></li>
+      </ul>
+    </div>
+
+    <form id="contact-form" novalidate class="rounded-2xl border border-slate-200 bg-mist p-6 sm:p-8">
+      <div>
+        <label for="name" class="block text-sm font-semibold text-navy">Name</label>
+        <input id="name" name="name" type="text" autocomplete="name" class="mt-1 w-full rounded-lg border border-slate-300 bg-white px-4 py-2.5 focus:border-royal focus:outline-none focus:ring-2 focus:ring-royal/30" />
+        <p class="err mt-1 hidden text-sm text-red-600" data-for="name"></p>
+      </div>
+      <div class="mt-5">
+        <label for="email" class="block text-sm font-semibold text-navy">Email</label>
+        <input id="email" name="email" type="email" autocomplete="email" class="mt-1 w-full rounded-lg border border-slate-300 bg-white px-4 py-2.5 focus:border-royal focus:outline-none focus:ring-2 focus:ring-royal/30" />
+        <p class="err mt-1 hidden text-sm text-red-600" data-for="email"></p>
+      </div>
+      <div class="mt-5">
+        <label for="message" class="block text-sm font-semibold text-navy">Message</label>
+        <textarea id="message" name="message" rows="5" class="mt-1 w-full rounded-lg border border-slate-300 bg-white px-4 py-2.5 focus:border-royal focus:outline-none focus:ring-2 focus:ring-royal/30"></textarea>
+        <p class="err mt-1 hidden text-sm text-red-600" data-for="message"></p>
+      </div>
+      <button type="submit" class="mt-6 w-full rounded-lg bg-royal px-6 py-3 font-semibold text-white transition hover:bg-navy focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-royal sm:w-auto">Send message</button>
+      <p id="form-status" class="mt-4 hidden rounded-lg bg-emerald-50 px-4 py-3 text-sm text-emerald-800" role="status"></p>
+    </form>
+  </div>
+</section>
+
+</main>
+
+<!-- ============ I. FOOTER ============ -->
+<footer class="bg-navy text-slate-300">
+  <div class="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-3 lg:px-8">
+    <div>
+      <a href="#home" class="flex items-center gap-3 text-white">
+        <span class="grid h-9 w-9 place-items-center rounded-lg bg-white/10 text-accent" aria-hidden="true"><svg class="h-5 w-5"><use href="#i-code"/></svg></span>
+        <span class="font-display font-semibold">IIUC Computer Club</span>
+      </a>
+      <p class="mt-4 max-w-xs">A student community for learning, building, and leading in technology.</p>
+    </div>
+    <nav aria-label="Footer navigation">
+      <h2 class="font-display font-semibold text-white">Quick links</h2>
+      <ul class="mt-4 grid grid-cols-2 gap-2 sm:max-w-xs">
+        <li><a class="hover:text-accent" href="#home">Home</a></li>
+        <li><a class="hover:text-accent" href="#about">About</a></li>
+        <li><a class="hover:text-accent" href="#events">Events</a></li>
+        <li><a class="hover:text-accent" href="#activities">Activities</a></li>
+        <li><a class="hover:text-accent" href="#team">Team</a></li>
+        <li><a class="hover:text-accent" href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <div>
+      <h2 class="font-display font-semibold text-white">Follow us</h2>
+      <div class="mt-4 flex gap-3">
+        <a href="#" aria-label="Facebook (placeholder)" class="grid h-10 w-10 place-items-center rounded-full bg-white/10 transition hover:bg-accent hover:text-navy"><svg class="h-5 w-5"><use href="#i-fb"/></svg></a>
+        <a href="#" aria-label="LinkedIn (placeholder)" class="grid h-10 w-10 place-items-center rounded-full bg-white/10 transition hover:bg-accent hover:text-navy"><svg class="h-5 w-5"><use href="#i-in"/></svg></a>
+        <a href="#contact" aria-label="Email" class="grid h-10 w-10 place-items-center rounded-full bg-white/10 transition hover:bg-accent hover:text-navy"><svg class="h-5 w-5"><use href="#i-mail"/></svg></a>
+      </div>
+    </div>
+  </div>
+  <div class="border-t border-white/10 px-4 py-6 text-center text-sm sm:px-6">
+    <p>&copy; <span id="year">2026</span> IIUC Computer Club. International Islamic University Chittagong (IIUC), Chattogram.</p>
+    <p class="mt-1 text-slate-400">Student project. Not an official IIUC publication until approved by the club.</p>
+  </div>
+</footer>
+
+<script src="js/script.js"></script>
+</body>
+</html>
