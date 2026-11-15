@@ -2,6 +2,17 @@
 
 A responsive landing page for the IIUC Computer Club (International Islamic University Chittagong), built with **HTML5, Tailwind CSS (Play CDN) and vanilla JavaScript**. Course: Software Development I (CSE-2340), Mini Project 2.
 
+## About the Developer
+
+I'm a CSE 3rd semester student at International Islamic University Chittagong (IIUC), and I developed this website.
+
+- **Name:** Md. Muhaiminur Rahman Tahmid
+- **ID:** C253133
+- **Department:** Computer Science & Engineering (CSE)
+- **GitHub:** [MRT-Tahmid](https://github.com/MRT-Tahmid)
+
+This IIUC Computer Club page is my mini project for the **CSE-2340 (Software Development I)** course.
+
 ## Structure
 
 ```
@@ -47,10 +58,4 @@ You need an internet connection: Tailwind and the Google Fonts load from a CDN.
 - The contact form only validates in the browser. To receive messages, connect a form service such as Formspree.
 - For a production site, replace the Tailwind Play CDN with a Tailwind CLI build.
 
-## Assignment checklist (MP2)
 
-- [x] Navigation bar and more than two content sections
-- [x] Tailwind CSS styling (colors, spacing, typography)
-- [x] Responsive layout for mobile and desktop
-- [x] Interactive elements: hamburger menu, hover effects, active nav link, form validation
-- [ ] Submit the GitHub repository URL and a ZIP file of this folder
